@@ -19,19 +19,19 @@ function delay(ms) {
 }
 
 async function getApple() {
-    await delay(3000);
+    await delay(2000);
     return "apple";
 }
 
 //Promise Consumer를 async로 작성할 수 있다.
 async function getBanana() { 
-    await delay(3000);
+    await delay(1000);
     return "banana";
 }
 
 //Consumer
 function getBananaPromise() {
-    return delay(3000)
+    return delay(1000)
     .then(() => "banana");
 }
 
@@ -41,6 +41,7 @@ function pickFruits() {
         return getBanana().then(banana => `${apple} + ${banana}`);
     });
 }
+pickFruits().then(console.log);
 
 async function pickFruitsAsync() {
     //TODO: need try/catch
@@ -48,6 +49,7 @@ async function pickFruitsAsync() {
     const banana = await getBanana();
     return `Asnyc: ${apple} + ${banana}`;
 }
+pickFruitsAsync().then(console.log);
 
 //병렬 실행
 async function pickFruitsAsync__() {
@@ -58,6 +60,17 @@ async function pickFruitsAsync__() {
     return `Asnyc: ${apple} + ${banana}`;
 }
 
+//3. useful Promise APIs (above code refactor)
+function pickAllFruits() {
+    return Promise.all([getApple(), getBanana()])
+        .then(fruits => fruits.join(' + '));
+}
 
-pickFruits().then(console.log);
-pickFruitsAsync().then(console.log);
+pickAllFruits().then(allFruits => console.log(`all(): ${allFruits}`));
+
+//4. Can get Faster Promise 
+function pickOnlyOne() {
+    return Promise.race([getApple(), getBanana()]);
+}
+
+pickOnlyOne().then(console.log);
