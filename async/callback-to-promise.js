@@ -22,7 +22,7 @@ class UserStorage {
                 if (user === "hako") {
                     resolve({ name: 'hako', role: "admin" });
                 } else {
-                    reject(new Error("no access"));
+                    reject(new Error("no access")) ;
                 }
              }, 1000);
         });
